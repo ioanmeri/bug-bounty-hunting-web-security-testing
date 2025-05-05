@@ -1,7 +1,7 @@
 # Section 5: CSRF - Cross-Site Request Forgery
 
 **Broken Access Control** Vulnerability
-
+- Requests are not validated at the server side
 - Server does not properly check if the user generated the request
 - Requests can be forged and sent to users to **make them take actions they don't intend to do** such as
   - Change email
