@@ -48,3 +48,33 @@ http://target.com/page.php?something=<script>alert('xss')</script>
   - No logs, no filters, no server side protection
 
  ---
+
+ ## HTML Injection
+
+ - Allow an attacker to inject HTML code into the page
+ - Code is executed when the page loads
+ - Code is executed on the **client** machine not the server
+
+ - Similar to XSS but **simpler**
+ - **Hints** at the existence of an XSS
+
+
+Example: in a search box search for `<b>digital</b>`
+
+---
+
+## Discovering Reflected & Stored XSS Vulnerabilities
+
+### Reflected
+
+Example: in a search box search for `<script>alert(2)</script)`
+
+Reflected because the only way for it to work is to copy the link and send it to the target
+
+### Stored XSS
+
+Example: Post a comment in a blog with content `<script>alert(2)</script)`
+
+Stored because, whatever is injected in the comment is saved in the DB and all users visiting will see the code
+
+---
