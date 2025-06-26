@@ -68,3 +68,81 @@ When I am accessing my account, the URL path looks like this:
 ```
 
 ---
+
+## Discovering IDOR Vulnerabilities
+
+Insecure **Direct** Object Reference
+- Objects are accessed directly based on user input
+  - Docs
+  - Images
+  - Database records
+
+By manipulating the user input, we can retrieve data that does not belong to us
+
+**Examples**
+- Loading user data with a guessed id in the URL params, or profile image
+- loading private image with a link in the URL
+- Download text "view transcript" in live chat
+  - intercept the post request
+  - `GET /download-transcript/4.txt HTTP/1.1`
+  - modify text file number `1.txt`
+  - Download file that belongs to another user: IDOR
+ 
+--- 
+
+## Privelege Escalation with Burp Repeater
+
+- update email page in web application
+- intercept the POST request
+- check body parameters that has an email
+- send request to Repeater
+- check the response
+- modify payload in the next request
+
+### Response
+
+```
+HTTP/1.1
+{
+  "username": "wiener",
+  "email": "test2@test.com",
+  "apiKey": "vsfsV309sfdfjaJfds2",
+  "roleId": 1
+}
+```
+
+### Modified Request
+
+```
+HTTP/1.1
+{
+  "email": "test2@test.com",
+  "roleId": 2
+}
+```
+
+and now the user has admin privileges
+
+---
+
+## HTTP TRACE
+
+GET request in admin page, responses with a message of unauthorized access
+- forward request
+- try TRACE method instead of GET in the `/admin` request
+- the server responses with the same request that sent to it
+
+In-between nodes can modify the original request
+
+`TRACE /admin` ➡️ Proxy ➡️ Target Web Server ➡️ `TRACE` response along with extra headers
+
+- downloaded a text file with the TRACE response with extra header
+- `X-CUSTOM-IP-Authorization: 89.101.123.254`
+- modify IP to local host (educated guess) to make web server to think that we are admins and load admin page
+- Request Options: Match and Replace
+  - Add: `X-CUSTOM-IP-Authorization: 127.0.0.1`
+  - Tick Rule
+- have access to admin page
+  - Untick Rule
+
+---
