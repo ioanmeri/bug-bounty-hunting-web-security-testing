@@ -19,7 +19,7 @@
 
 [12: Bypassing Content Security Policy](12-bypassing-content-security-policy.md)
 
-[13-sql-injection-vulnerabilities.md](13-sql-injection-vulnerabilities.md)
+[13: SQL Injection Vulnerabilities](13-sql-injection-vulnerabilities.md)
 
 [14: Blind SQL Injections](14-blind-sql-injections.md)
 
